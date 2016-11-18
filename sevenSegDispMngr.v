@@ -4,20 +4,56 @@ input apple, banana, carrot, date, error;
 input [7:0] credit;
 output reg [6:0] digit1 , digit0;
 
-reg enable;
-reg [2:0] c_out;
-reg [3:0] d1_in, d0_in;
-reg [3:0] spec_reg; //possible values: AA, BB, CC, DD, EE
+//for decoder
+reg [2:0] counter;
+reg [3:0] control;
 
-initial begin
-segDecoder d1(d1_in, digit1);
-segDecoder d0(d0_in, digit0);
-downCount dc(c_out, enable, clk, reset);
-d1_in = 4'b0000;
-d0_in = 4'b0000;
-end
+segDecoder digital1(control, digit1);
+segDecoder digital0(control, digit0);
 
-always@(posedge clk)
+always@(posedge clk) //possibilities for decoder
 begin
-
-     
+if(counter == 0)
+  begin
+  control <= credit [7:4];
+  control <= credit [3:0];
+end
+else if(apple)
+  begin
+  control <= 10;
+  //digit1 <= 7'b1110110;
+  //digit0 <= 7'b1110110;
+  counter <= 6;
+end
+else if(banana)
+  begin
+  control <= 11;
+  //digit1 <= 7'b0011111;
+  //digit0 <= 7'b0011111;
+  counter <= 6;
+end
+else if(carrot)
+  begin
+  control <= 12;
+  //digit1 <= 7'b1001110;
+  //digit0 <= 7'b1001110;
+  counter <= 6;
+end
+else if(date)
+  begin
+  control <= 13;
+  //digit1 <= 7'b0111101;
+  //digit0 <= 7'b0111101;
+  counter <= 6;
+end
+else if(error)
+  begin
+  control <= 14;
+  //digit1 <= 7'b1001111;
+  //digit0 <= 7'b1001111;
+  counter <= 6;
+end
+else
+  counter <= counter - 1;
+end
+endmodule
