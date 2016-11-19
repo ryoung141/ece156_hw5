@@ -15,7 +15,7 @@ reg [9:0] coin;
 
 
 always @(posedge clk) begin
- if(reset <= 1 ) begin
+ if(reset == 1 ) begin
     coin = 10'b0000000000;
     assign {penny, nickel, dime, quarter} = 4'b0000;
  

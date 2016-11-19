@@ -2,7 +2,7 @@ module sevenSegDispMngr( clk, reset, apple, banana, carrot, date, error, credit,
 input clk, reset;
 input apple, banana, carrot, date, error;
 input [7:0] credit;
-output reg [6:0] digit1 , digit0;
+output [6:0] digit1 , digit0;
 
 //for decoder
 reg [2:0] counter;
